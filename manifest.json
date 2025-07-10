@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "Underdog Draft Assistant Pro",
+  "version": "2.0.0",
+  "description": "Professional draft assistant using Underdog's API",
+  
+  "permissions": [
+    "storage",
+    "webRequest",
+    "tabs"
+  ],
+  
+  "host_permissions": [
+    "*://api.underdogfantasy.com/*",
+    "*://underdogfantasy.com/*"
+  ],
+  
+  "background": {
+    "service_worker": "background.js"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["*://underdogfantasy.com/draft/*", "*://underdogfantasy.com/active/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_start"
+    }
+  ],
+  
+  "web_accessible_resources": [
+    {
+      "resources": ["inject.js"],
+      "matches": ["*://underdogfantasy.com/*"]
+    }
+  ],
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Draft Assistant Settings"
+  }
+}

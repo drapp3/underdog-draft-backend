@@ -1,0 +1,290 @@
+/* Sidebar Styles */
+#uda-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100vh;
+  background: #0d1117;
+  border-left: 2px solid #30363d;
+  color: #f0f6fc;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Header */
+.uda-header {
+  background: #161b22;
+  padding: 20px;
+  border-bottom: 1px solid #30363d;
+}
+
+.uda-header h3 {
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  color: #58a6ff;
+}
+
+.uda-info {
+  display: flex;
+  gap: 15px;
+  font-size: 14px;
+  color: #8b949e;
+}
+
+/* Tabs */
+.uda-tabs {
+  display: flex;
+  background: #0d1117;
+  border-bottom: 1px solid #30363d;
+  padding: 0 20px;
+}
+
+.uda-tab {
+  flex: 1;
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #8b949e;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.uda-tab:hover {
+  color: #f0f6fc;
+}
+
+.uda-tab.active {
+  color: #58a6ff;
+  border-bottom-color: #58a6ff;
+}
+
+/* Content */
+.uda-content {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.uda-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px;
+  overflow-y: auto;
+  display: none;
+}
+
+.uda-panel.active {
+  display: block;
+}
+
+/* Search */
+.uda-search {
+  margin-bottom: 15px;
+}
+
+.uda-search input {
+  width: 100%;
+  padding: 10px 15px;
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  color: #f0f6fc;
+  font-size: 14px;
+}
+
+.uda-search input:focus {
+  outline: none;
+  border-color: #58a6ff;
+}
+
+/* Player List */
+.uda-player {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+
+.uda-player:hover {
+  background: #21262d;
+  border-color: #58a6ff;
+}
+
+.uda-rank {
+  background: #30363d;
+  color: #8b949e;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 35px;
+  text-align: center;
+}
+
+.uda-name {
+  flex: 1;
+  font-weight: bold;
+  color: #f0f6fc;
+}
+
+.uda-pos {
+  color: #58a6ff;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 30px;
+}
+
+.uda-team {
+  color: #8b949e;
+  font-size: 12px;
+  min-width: 35px;
+}
+
+.uda-queue-btn {
+  padding: 6px 12px;
+  background: #238636;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.uda-queue-btn:hover {
+  background: #2ea043;
+}
+
+/* Picks List */
+.uda-pick {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  background: #161b22;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.uda-pick-num {
+  background: #58a6ff;
+  color: #0d1117;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 35px;
+  text-align: center;
+}
+
+.uda-pick-team {
+  color: #8b949e;
+  font-size: 12px;
+  min-width: 60px;
+}
+
+.uda-pick-player {
+  flex: 1;
+  color: #f0f6fc;
+}
+
+/* My Team */
+.uda-team-player {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: #161b22;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.uda-pick-round {
+  background: #3fb950;
+  color: #0d1117;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.uda-player-info {
+  flex: 1;
+  color: #f0f6fc;
+}
+
+/* Empty State */
+.uda-empty {
+  text-align: center;
+  color: #8b949e;
+  padding: 40px 20px;
+}
+
+/* Notifications */
+.uda-notification {
+  position: fixed;
+  top: 20px;
+  right: 420px;
+  background: #3fb950;
+  color: #0d1117;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  z-index: 10001;
+  animation: slideIn 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.uda-proj {
+  background: #3fb950;
+  color: #0d1117;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 40px;
+  text-align: center;
+}
+
+/* Scrollbar */
+.uda-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.uda-panel::-webkit-scrollbar-track {
+  background: #0d1117;
+}
+
+.uda-panel::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 3px;
+}
+
+.uda-panel::-webkit-scrollbar-thumb:hover {
+  background: #58a6ff;
+}
