@@ -143,6 +143,42 @@ def get_exposure(user_id):
         'exposure_pct': e.exposure_pct
     } for e in exposures])
 
+@app.route('/upload')
+def upload_page():
+    return '''
+    <!DOCTYPE html>
+    <html>
+    <head><title>Upload ETR Data</title></head>
+    <body style="font-family: Arial; padding: 20px;">
+        <h2>Upload ETR CSV</h2>
+        <form id="uploadForm">
+            <input type="file" id="csvFile" accept=".csv" required>
+            <button type="submit">Upload</button>
+        </form>
+        <div id="result"></div>
+        <script>
+        document.getElementById('uploadForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const file = document.getElementById('csvFile').files[0];
+            const text = await file.text();
+            
+            const response = await fetch('/api/upload-etr', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({csv_data: text})
+            });
+            
+            const result = await response.json();
+            document.getElementById('result').innerHTML = 
+                '<p>' + (result.success ? 
+                    'Success! Loaded ' + result.count + ' players' : 
+                    'Error: ' + result.error) + '</p>';
+        };
+        </script>
+    </body>
+    </html>
+    '''
+
 @app.route('/api/recommendations', methods=['POST'])
 def get_recommendations():
     """Get player recommendations with exposure consideration"""
