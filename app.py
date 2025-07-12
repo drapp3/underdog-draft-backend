@@ -79,37 +79,53 @@ def upload_etr():
         # Clear existing players
         Player.query.delete()
         
+        count = 0
         for row in reader:
-            # Helper function to safely convert to float
-            def safe_float(value, default=0):
-                try:
-                    return float(value) if value and value.strip() else default
-                except:
-                    return default
+            # Skip empty rows
+            if not row.get('Player') and not row.get('player_name'):
+                continue
+                
+            # Get values with proper defaults
+            appearance_id = row.get('id', '') or row.get('appearance_id', '') or f'temp_{count}'
+            name = row.get('Player', '') or row.get('player_name', '')
+            position = row.get('Position', '') or row.get('Pos', '')
+            team = row.get('Team', '') or ''
             
-            # Helper function to safely convert to int
-            def safe_int(value, default=999):
-                try:
-                    return int(value) if value and value.strip() else default
-                except:
-                    return default
+            # Handle numeric values
+            try:
+                projection = float(row.get('UD Projection', 0) or 0)
+            except (ValueError, TypeError):
+                projection = 0.0
+                
+            try:
+                rank = int(row.get('Rank', 999) or 999)
+            except (ValueError, TypeError):
+                rank = 999
+                
+            try:
+                adp = float(row.get('ADP', 999) or 999)
+            except (ValueError, TypeError):
+                adp = 999.0
             
-            player = Player(
-                appearance_id=row.get('appearance_id', row.get('id', '')),
-                name=row.get('Player', row.get('player_name', '')),
-                position=row.get('Position', row.get('Pos', '')),
-                team=row.get('Team', ''),
-                projection=safe_float(row.get('UD Projection', row.get('Projection', ''))),
-                rank=safe_int(row.get('Rank', '')),
-                adp=safe_float(row.get('ADP', ''))
-            )
-            db.session.add(player)
+            # Only add if we have a name
+            if name:
+                player = Player(
+                    appearance_id=appearance_id,
+                    name=name,
+                    position=position,
+                    team=team,
+                    projection=projection,
+                    rank=rank,
+                    adp=adp
+                )
+                db.session.add(player)
+                count += 1
         
         db.session.commit()
-        return jsonify({'success': True, 'count': Player.query.count()})
+        return jsonify({'success': True, 'count': count})
     except Exception as e:
         db.session.rollback()
-        return jsonify({'success': False, 'error': str(e)}), 400
+        return jsonify({'success': False, 'error': f'Row {count}: {str(e)}'}, 400)
     
 @app.route('/api/draft-pick', methods=['POST'])
 def record_pick():
