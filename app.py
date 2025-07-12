@@ -1,4 +1,6 @@
 import os
+import sys
+import traceback
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -43,6 +45,14 @@ class ExposureTracking(db.Model):
     week = db.Column(db.String(20))
     draft_count = db.Column(db.Integer, default=0)
     exposure_pct = db.Column(db.Float, default=0.0)
+
+try:
+    with app.app_context():
+        db.create_all()
+        print("Database tables created successfully!", file=sys.stderr)
+except Exception as e:
+    print(f"Database error: {str(e)}", file=sys.stderr)
+    traceback.print_exc()
 
 # Create tables
 with app.app_context():
