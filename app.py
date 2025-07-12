@@ -80,22 +80,37 @@ def upload_etr():
         Player.query.delete()
         
         for row in reader:
+            # Helper function to safely convert to float
+            def safe_float(value, default=0):
+                try:
+                    return float(value) if value and value.strip() else default
+                except:
+                    return default
+            
+            # Helper function to safely convert to int
+            def safe_int(value, default=999):
+                try:
+                    return int(value) if value and value.strip() else default
+                except:
+                    return default
+            
             player = Player(
                 appearance_id=row.get('appearance_id', row.get('id', '')),
                 name=row.get('Player', row.get('player_name', '')),
                 position=row.get('Position', row.get('Pos', '')),
                 team=row.get('Team', ''),
-                projection=float(row.get('UD Projection', row.get('Projection', 0))),
-                rank=int(row.get('Rank', 999)),
-                adp=float(row.get('ADP', 999))
+                projection=safe_float(row.get('UD Projection', row.get('Projection', ''))),
+                rank=safe_int(row.get('Rank', '')),
+                adp=safe_float(row.get('ADP', ''))
             )
             db.session.add(player)
         
         db.session.commit()
         return jsonify({'success': True, 'count': Player.query.count()})
     except Exception as e:
+        db.session.rollback()
         return jsonify({'success': False, 'error': str(e)}), 400
-
+    
 @app.route('/api/draft-pick', methods=['POST'])
 def record_pick():
     """Record a draft pick for exposure tracking"""
