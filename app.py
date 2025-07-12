@@ -17,6 +17,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:/
 if app.config['SQLALCHEMY_DATABASE_URI'].startswith('postgres://'):
     app.config['SQLALCHEMY_DATABASE_URI'] = app.config['SQLALCHEMY_DATABASE_URI'].replace('postgres://', 'postgresql://', 1)
 
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # Database Models
@@ -53,10 +54,6 @@ try:
 except Exception as e:
     print(f"Database error: {str(e)}", file=sys.stderr)
     traceback.print_exc()
-
-# Create tables
-with app.app_context():
-    db.create_all()
 
 @app.route('/api/players')
 def get_players():
